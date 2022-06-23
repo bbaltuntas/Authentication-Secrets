@@ -4,6 +4,8 @@ const mongoose = require("mongoose")
 const ejs = require("ejs")
 const encrypt = require("mongoose-encryption")
 const md5 = require("md5")
+const bcrypt = require("bcrypt")
+const saltRounds = 10
 
 const app = express()
 
@@ -40,17 +42,20 @@ app.route("/register")
         res.render("register")
     })
     .post((req, res) => {
-        const newUser = new User({
-            email: req.body.email,
-            password: md5(req.body.password),
-        })
-        newUser.save(function (err) {
-            if (!err) {
-                res.render("secrets")
-            } else {
-                console.log(err)
-            }
-        })
+        bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
+            const newUser = new User({
+                email: req.body.email,
+                password: hash,
+            })
+            newUser.save(function (error) {
+                if (!error) {
+                    res.render("secrets")
+                } else {
+                    console.log(err)
+                }
+            })
+        });
+
     })
 
 
@@ -59,19 +64,21 @@ app.route("/login")
         res.render("login")
     })
     .post((req, res) => {
+
         const email = req.body.email
-        const password = md5(req.body.password)
+        const password = req.body.password
         User.findOne({email: email}, function (err, foundUser) {
             if (err) {
                 console.log(err)
             } else {
-                console.log("hata yok")
                 if (foundUser) {
-                    if (foundUser.password === password) {
-                        res.render("secrets")
-                    }
+                    bcrypt.compare(password, foundUser.password, function (err, result) {
+                        if (result === true) {
+                            res.render("secrets")
+                        }
+                    });
                 } else {
-                    console.log("kullanıcı yok")
+                    console.log("No User")
                 }
             }
         })
