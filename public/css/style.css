@@ -12,7 +12,6 @@ body {
     flex-direction: column;
 
 
-
 }
 
 .centered {
@@ -28,9 +27,81 @@ body {
 
 }
 
+#secret::placeholder {
+    text-align: center;
+}
+
 .input-form {
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     background-color: #fff;
     border-radius: 15px;
     padding: 1em;
+}
+
+.singup-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    align-items: center;
+    position: relative;
+
+
+}
+
+.secret-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.secret-content {
+    width: 250px;
+    min-height: 150px;
+    word-wrap: break-word;
+    padding: 1em;
+    border-radius: 10px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+.add-button {
+
+    border-radius: 100%;
+    position: fixed;
+    bottom: 3rem;
+    right: 3rem;
+}
+
+.header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.h-line {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.line {
+    width: 100%;
+    border-bottom: thin solid black;
+    align-self: center;
+    margin: 0 5px;
+
+}
+
+
+@media screen and (max-width: 800px) {
+    .input-cont {
+        width: 70%;
+    }
+
+
 }
